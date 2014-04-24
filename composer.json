@@ -1,0 +1,34 @@
+{
+    "name": "eye4web/zf-user-rdt",
+    "description": "Bridge between ZfcUser and RoaveDeveloperTools.",
+    "license": "MIT",
+    "keywords": [
+        "debug",
+        "developer",
+        "zendframework",
+        "module",
+        "eye4web",
+        "zfcuser"
+    ],
+    "homepage": "https://github.com/Eye4web/ZfcUserRDT",
+    "authors": [
+        {
+            "name": "Daniel Strøm",
+            "email": "daniel@eye4web.dk"
+        },
+        {
+            "name": "Eye4web ApS",
+            "email": "info@eye4web.dk",
+            "homepage": "https://eye4web.dk/"
+        }
+    ],
+    "require": {
+        "zf-commons/zfc-user": "1.*",
+        "roave/roave-developer-tools": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Eye4web\\ZfcUserRDT\\": "src/"
+        }
+    }
+}

@@ -1,0 +1,42 @@
+<?php
+
+use Eye4web\ZfcUserRDT\Inspection\UserInspection;
+use Zend\Debug\Debug;
+use ZfcUser\Entity\UserInterface;
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection UserInspection */
+/* @var $user UserInterface */
+
+$icon = base64_encode(file_get_contents(__DIR__ . '/../../../../asset/user-toolbar-tab.png'));
+$data = $inspection->getInspectionData();
+$user = $data['user'];
+?>
+
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <img src="data:image/jpeg;base64,<?= $icon; ?>" alt="User information">
+        <span class="zdt-toolbar-info">
+            <?= $user->getEmail(); ?>
+        </span>
+    </div>
+    <div class="zdt-toolbar-detail">
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">ZfcUser</span>
+        <p>
+            <span class="zdt-detail-label">Version:</span>
+            <span class="zdt-detail-value">1.0.0</span>
+        </p>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Entity</span>
+        <span class="zdt-toolbar-info">
+            <span class="zdt-detail-pre"><?=
+                Debug::dump($user, null, false);
+                ?></span>
+        </span>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Hydrator</span>
+        <span class="zdt-toolbar-info">
+            <span class="zdt-detail-pre"><?=
+                Debug::dump($data['hydrator'], null, false);
+                ?></span>
+        </span>
+    </div>
+</div>
