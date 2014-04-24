@@ -1,5 +1,5 @@
 {
-    "name": "eye4web/zf-user-rdt",
+    "name": "eye4web/zfc-user-rdt",
     "description": "Bridge between ZfcUser and RoaveDeveloperTools.",
     "license": "MIT",
     "keywords": [
