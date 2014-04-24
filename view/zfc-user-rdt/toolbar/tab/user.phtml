@@ -6,18 +6,16 @@ use ZfcUser\Entity\UserInterface;
 
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 /* @var $inspection UserInspection */
-/* @var $user UserInterface */
 
 $icon = base64_encode(file_get_contents(__DIR__ . '/../../../../asset/user-toolbar-tab.png'));
 $data = $inspection->getInspectionData();
-$user = $data['user'];
 ?>
 
 <div class="zdt-toolbar-entry">
     <div class="zdt-toolbar-preview">
         <img src="data:image/jpeg;base64,<?= $icon; ?>" alt="User information">
         <span class="zdt-toolbar-info">
-            <?= $user->getEmail(); ?>
+            <?= $data['userData']['email']; ?>
         </span>
     </div>
     <div class="zdt-toolbar-detail">
@@ -26,16 +24,18 @@ $user = $data['user'];
             <span class="zdt-detail-label">Version:</span>
             <span class="zdt-detail-value">1.0.0</span>
         </p>
-        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Entity</span>
+        <p>
+            <span class="zdt-detail-label">User class:</span>
+            <span class="zdt-detail-value"><?= $data['userClass'] ?></span>
+        </p>
+        <p>
+            <span class="zdt-detail-label">User hydrator class:</span>
+            <span class="zdt-detail-value"><?= $data['userHydratorClass'] ?></span>
+        </p>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Entity data</span>
         <span class="zdt-toolbar-info">
             <span class="zdt-detail-pre"><?=
-                Debug::dump($user, null, false);
-                ?></span>
-        </span>
-        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Hydrator</span>
-        <span class="zdt-toolbar-info">
-            <span class="zdt-detail-pre"><?=
-                Debug::dump($data['hydrator'], null, false);
+                Debug::dump($data['userData'], null, false);
                 ?></span>
         </span>
     </div>

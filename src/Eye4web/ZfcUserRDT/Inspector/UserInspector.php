@@ -34,7 +34,8 @@ class UserInspector implements InspectorInterface
     {
         $serviceManager = $event->getApplication()->getServiceManager();
         $authService = $serviceManager->get('zfcuser_auth_service');
+        $user = $authService->getIdentity();
         $userHydrator = $serviceManager->get('zfcuser_user_hydrator');
-        return new UserInspection($authService->getIdentity(), $userHydrator);
+        return new UserInspection($userHydrator->extract($user), get_class($user), get_class($userHydrator));
     }
 }
