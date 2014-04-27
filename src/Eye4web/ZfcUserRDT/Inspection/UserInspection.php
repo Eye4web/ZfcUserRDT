@@ -27,22 +27,22 @@ use Roave\DeveloperTools\Inspection\InspectionInterface;
  */
 class UserInspection implements InspectionInterface
 {
-    /**
-     * @var \ZfcUser\Entity\UserInterface
-     */
-    protected $user;
+    const PARAM_USER_DATA = 'userData';
+    const PARAM_USER_HYDRATOR_CLASS = 'userHydratorClass';
+    const PARAM_USER_CLASS = 'userClass';
     
-    protected $userHydrator;
+    protected $userData;
+    protected $userHydratorClass;
+    protected $userClass;
     
     /**
      * @param UserInterface $user
      */
-    public function __construct(UserInterface $user, $userHydrator)
+    public function __construct($userData, $userClass, $userHydratorClass)
     {
-        $user = clone $user;
-        $user->setPassword('hidden');
-        $this->user = $user;
-        $this->userHydrator = $userHydrator;
+        $this->userData = $userData;
+        $this->userHydratorClass = $userHydratorClass;
+        $this->userClass = $userClass;
     }
 
     /**
@@ -50,7 +50,11 @@ class UserInspection implements InspectionInterface
      */
     public function serialize()
     {
-        return serialize($this->userHydrator->extract($this->user));
+        return serialize([
+            'userData' => $this->userData,
+            'userHydratorClass' => $this->userHydratorClass,
+            'userClass' => $this->userClass
+        ]);
     }
 
     /**
@@ -58,7 +62,10 @@ class UserInspection implements InspectionInterface
      */
     public function unserialize($serialized)
     {
-        $this->userHydrator->hydrate(unserialize($serialized), $this->user);
+        $data = unserialize($serialized);
+        $this->userHydratorClass = $data['userHydratorClass'];
+        $this->userClass = $data['userClass'];
+        $this->userData = $data['userData'];
     }
 
     /**
@@ -67,8 +74,9 @@ class UserInspection implements InspectionInterface
     public function getInspectionData()
     {
         return [
-            'user' => $this->user,
-            'hydrator' => $this->userHydrator
+            self::PARAM_USER_DATA => $this->userData,
+            self::PARAM_USER_CLASS => $this->userClass,
+            self::PARAM_USER_HYDRATOR_CLASS => $this->userHydratorClass
         ];
     }
 }
