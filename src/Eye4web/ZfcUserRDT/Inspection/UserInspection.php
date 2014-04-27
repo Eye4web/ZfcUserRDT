@@ -27,6 +27,10 @@ use Roave\DeveloperTools\Inspection\InspectionInterface;
  */
 class UserInspection implements InspectionInterface
 {
+    const PARAM_USER_DATA = 'userData';
+    const PARAM_USER_HYDRATOR_CLASS = 'userHydratorClass';
+    const PARAM_USER_CLASS = 'userClass';
+    
     protected $userData;
     protected $userHydratorClass;
     protected $userClass;
@@ -70,9 +74,9 @@ class UserInspection implements InspectionInterface
     public function getInspectionData()
     {
         return [
-            'userData' => $this->userData,
-            'userClass' => $this->userClass,
-            'userHydratorClass' => $this->userHydratorClass
+            self::PARAM_USER_DATA => $this->userData,
+            self::PARAM_USER_CLASS => $this->userClass,
+            self::PARAM_USER_HYDRATOR_CLASS => $this->userHydratorClass
         ];
     }
 }
