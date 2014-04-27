@@ -21,6 +21,8 @@ namespace Eye4web\ZfcUserRDT\Inspector;
 use Eye4web\ZfcUserRDT\Inspection\UserInspection;
 use Zend\EventManager\EventInterface;
 use Roave\DeveloperTools\Inspector\InspectorInterface;
+use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Authentication\AuthenticationServiceInterface;
 
 /**
  * Inspector that captures the user for a given event
@@ -28,14 +30,27 @@ use Roave\DeveloperTools\Inspector\InspectorInterface;
 class UserInspector implements InspectorInterface
 {
     /**
+     * @var \Zend\Stdlib\Hydrator\HydratorInterface
+     */
+    protected $userHydrator;
+
+    /**
+     * @var AuthenticationServiceInterface
+     */
+    protected $authService;
+    
+    public function __construct(AuthenticationServiceInterface $authService, HydratorInterface $userHydrator)
+    {
+        $this->authService = $authService;
+        $this->userHydrator = $userHydrator;    
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public function inspect(EventInterface $event)
     {
-        $serviceManager = $event->getApplication()->getServiceManager();
-        $authService = $serviceManager->get('zfcuser_auth_service');
-        $user = $authService->getIdentity();
-        $userHydrator = $serviceManager->get('zfcuser_user_hydrator');
-        return new UserInspection($userHydrator->extract($user), get_class($user), get_class($userHydrator));
+        $user = $this->authService->getIdentity();
+        return new UserInspection($this->userHydrator->extract($user), get_class($user), get_class($this->userHydrator));
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
 use Eye4web\ZfcUserRDT\Inspector\UserInspector;
+use Eye4web\ZfcUserRDT\Factory\Inspector\UserInspectorFactory;
 use Eye4web\ZfcUserRDT\Renderer\ToolbarTab\ToolbarUserRenderer;
 
  return [
      'service_manager' => [
          'invokables' => [
-             UserInspector::class => UserInspector::class,
              ToolbarUserRenderer::class => ToolbarUserRenderer::class,
+         ],
+         'factories' => [
+             UserInspector::class => UserInspectorFactory::class,
          ],
      ],
      'roave_developer_tools' => [
